@@ -17,14 +17,14 @@ public class Peppy {
         list.add(task);
         print("Got it. I've added this task:",
                 String.format("  %s", task),
-                String.format("Now you have %d task%s in the list",
+                String.format("Now you have %d task%s in the list.",
                         list.size(),
                         (list.size() > 1) ? "s" : ""));
     }
 
     public static void printList(ArrayList<Task> list) {
         if (list.isEmpty()) {
-            print("there's nothing in the list!");
+            print("There's nothing in the list!");
         } else {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < list.size(); i++) {
@@ -39,7 +39,7 @@ public class Peppy {
 
     public static void markDone(ArrayList<Task> list, Integer index) {
         if (index > list.size()) {
-            print("index provided is out of range!");
+            print("Index provided is out of range!");
         } else {
             Task task = list.get(index - 1);
             if (task.markDone())
@@ -52,7 +52,7 @@ public class Peppy {
 
     public static void markUndone(ArrayList<Task> list, Integer index) {
         if (index > list.size()) {
-            print("index provided is out of range!");
+            print("Index provided is out of range!");
         } else {
             Task task = list.get(index - 1);
             if (task.markUndone())
@@ -92,9 +92,9 @@ public class Peppy {
                         else
                             markUndone(list, index);
                     } catch (NumberFormatException e) {
-                        print("index provided is not a number!");
+                        print("Index provided is not a number!");
                     } catch (IndexOutOfBoundsException e) {
-                        print("missing index argument!");
+                        print("Missing index argument!");
                     }
                     break;
                 case "todo":
@@ -106,10 +106,10 @@ public class Peppy {
                         String[] split = input.substring(cmd.length() + 1)
                                 .split("/by ");
                         Deadline deadline = new Deadline(split[0].trim(),
-                                split[1]);
+                                split[1].trim());
                         addTask(list, deadline);
                     } catch (IndexOutOfBoundsException e) {
-                        print("invalid \"/by\" argument!");
+                        print("Invalid \"/by\" argument!");
                     }
                     break;
                 case "event":
@@ -118,11 +118,11 @@ public class Peppy {
                                 .split("/from ");
                         String[] secondSplit = split[1].split("/to ");
                         Event event = new Event(split[0].trim(),
-                                secondSplit[0],
-                                secondSplit[1]);
+                                secondSplit[0].trim(),
+                                secondSplit[1].trim());
                         addTask(list, event);
                     } catch (IndexOutOfBoundsException e) {
-                        print("invalid \"/from\" or \"/to\" argument!");
+                        print("Invalid \"/from\" or \"/to\" argument!");
                     }
                     break;
                 default:
