@@ -48,29 +48,29 @@ public class Peppy {
         }
     }
 
-    public static void markDone(ArrayList<Task> list, Integer index) throws PeppyMarkingException {
-        if (index < list.size() || index > 0) {
+    public static void markDone(ArrayList<Task> list, Integer index) throws PeppyEditException {
+        if (index <= list.size() && index > 0) {
             Task task = list.get(index - 1);
             if (task.markDone())
                 print("Nice! I've marked this task as done:",
                         String.format("   %s", task));
             else
-                throw new PeppyMarkingException("Error: Task already marked as done!");
+                throw new PeppyEditException("Error: Task already marked as done!");
         } else {
-            throw new PeppyMarkingException("Error: Index out of range!");
+            throw new PeppyEditException("Error: Index out of range!");
         }
     }
 
-    public static void markUndone(ArrayList<Task> list, Integer index) throws PeppyMarkingException {
-        if (index < list.size() || index > 0) {
+    public static void markUndone(ArrayList<Task> list, Integer index) throws PeppyEditException {
+        if (index <= list.size() && index > 0) {
             Task task = list.get(index - 1);
             if (task.markUndone())
                 print("Nice! I've marked this task as not done yet:",
                         String.format("  %s", task));
             else
-                throw new PeppyMarkingException("Error: Task already marked as undone!");
+                throw new PeppyEditException("Error: Task already marked as undone!");
         } else {
-            throw new PeppyMarkingException("Error: Index out of range!");
+            throw new PeppyEditException("Error: Index out of range!");
         }
     }
 
@@ -99,7 +99,7 @@ public class Peppy {
                     case MARK:
                     case UNMARK:
                         try {
-                            if (argsList.length >= 1) {
+                            if (argsList.length == 1) {
                                 Integer index = Integer.parseInt(argsList[0]);
                                 if (cmd.getAction() == Action.MARK)
                                     markDone(list, index);
@@ -110,7 +110,8 @@ public class Peppy {
                                         + "\t Usage: mark <index>");
                             }
                         } catch (NumberFormatException e) {
-                            throw new PeppyInvalidCommandException("Error: Index provided is not a number!");
+                            throw new PeppyInvalidCommandException("Error: Index provided is not valid!\n" +
+                                    "\t Usage: mark <index>");
                         }
                         break;
                     case TODO:
