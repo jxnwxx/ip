@@ -103,13 +103,26 @@ public class Peppy {
                     break;
                 case "deadline":
                     try {
-                        String[] split = input.substring(cmd.length() + 1).split("/by ");
+                        String[] split = input.substring(cmd.length() + 1)
+                                .split("/by ");
                         Deadline deadline = new Deadline(split[0].trim(),
                                 split[1]);
                         addTask(list, deadline);
-
                     } catch (IndexOutOfBoundsException e) {
-                        print("missing \"/by\" argument!");
+                        print("invalid \"/by\" argument!");
+                    }
+                    break;
+                case "event":
+                    try {
+                        String[] split = input.substring(cmd.length() + 1)
+                                .split("/from ");
+                        String[] secondSplit = split[1].split("/to ");
+                        Event event = new Event(split[0].trim(),
+                                secondSplit[0],
+                                secondSplit[1]);
+                        addTask(list, event);
+                    } catch (IndexOutOfBoundsException e) {
+                        print("invalid \"/from\" or \"/to\" argument!");
                     }
                     break;
                 default:
