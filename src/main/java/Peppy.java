@@ -60,11 +60,19 @@ public class Peppy {
             } else if (input.equals("list")) {
                 printList(list);
             } else if (input.startsWith("mark")) {
-                Integer index = Integer.parseInt(input.substring(5));
-                markDone(list, index);
+                try {
+                    Integer index = Integer.parseInt(input.substring(5));
+                    markDone(list, index);
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    print("error in marking tasks!");
+                }
             } else if (input.startsWith("unmark")) {
-                Integer index = Integer.parseInt(input.substring(7));
-                markUndone(list, index);
+                try {
+                    Integer index = Integer.parseInt(input.substring(7));
+                    markUndone(list, index);
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    print("error in unmarking tasks!");
+                }
             } else {
                 Task task = new Task(input);
                 list.add(task);
