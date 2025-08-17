@@ -75,7 +75,7 @@ public class Peppy {
     }
 
     public static void deleteTask(ArrayList<Task> list, Integer index) throws PeppyEditException {
-        if (index < list.size() && index > 0) {
+        if (index <= list.size() && index > 0) {
             Task task = list.get(index - 1);
             list.remove(task);
             print("Noted. I've removed this task:",
@@ -184,7 +184,8 @@ public class Peppy {
                                         + "\t Usage: delete <index>");
                             }
                         } catch (NumberFormatException e) {
-                            throw new PeppyInvalidCommandException("Error: Index provided is not a number!");
+                            throw new PeppyInvalidCommandException("Error: Index provided is not valid!\n" +
+                                    "\t Usage: delete <index>");
                         }
                         break;
                 }
