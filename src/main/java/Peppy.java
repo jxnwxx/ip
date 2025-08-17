@@ -2,11 +2,24 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Peppy {
-    public static void print(String string) {
+
+
+    public static void print(String... string) {
         String horizontalLine = "____________________________________________________________";
         System.out.println("\t" + horizontalLine);
-        System.out.println("\t " + string);
+        for (String str : string) {
+            System.out.println("\t " + str);
+        }
         System.out.println("\t" + horizontalLine);
+    }
+
+    public static void addTask(ArrayList<Task> list, Task task) {
+        list.add(task);
+        print("Got it. I've added this task:",
+                String.format("  %s", task),
+                String.format("Now you have %d task%s in the list",
+                        list.size(),
+                        (list.size() > 1) ? "s" : ""));
     }
 
     public static void printList(ArrayList<Task> list) {
@@ -19,7 +32,8 @@ public class Peppy {
                         i + 1,
                         list.get(i).toString()));
             }
-            print(result.toString().stripTrailing());
+            print("Here are the tasks in your list:",
+                    result.toString().stripTrailing());
         }
     }
 
@@ -28,9 +42,11 @@ public class Peppy {
             print("index provided is out of range!");
         } else {
             Task task = list.get(index - 1);
-            task.markDone();
-            print(String.format("Nice! I've marked this task as done:\n\t  %s",
-                    task.toString()));
+            if (task.markDone())
+                print("Nice! I've marked this task as done:",
+                        String.format("   %s", task));
+            else
+                print("Task already marked as done!");
         }
     }
 
@@ -39,44 +55,54 @@ public class Peppy {
             print("index provided is out of range!");
         } else {
             Task task = list.get(index - 1);
-            task.markUndone();
-            print(String.format("Nice! I've marked this task as not done yet:\n\t  %s",
-                    task.toString()));
+            if (task.markUndone())
+                print("Nice! I've marked this task as not done yet:",
+                        String.format("  %s", task));
+            else
+                print("Task already marked as undone!");
         }
     }
 
     public static void main(String[] args) {
-        ArrayList<Task> list = new ArrayList<Task>();
+        ArrayList<Task> list = new ArrayList<>();
 
-        String welcomeString = "Hello! I'm Peppy\n\t What can I do for you?";
-        print(welcomeString);
+        print("Hello! I'm Peppy",
+                "What can I do for you?");
 
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        boolean flag = true;
+        while (flag) {
             String input = scanner.nextLine();
-            if (input.equals("bye")) {
-                break;
-            } else if (input.equals("list")) {
-                printList(list);
-            } else if (input.startsWith("mark")) {
-                try {
-                    Integer index = Integer.parseInt(input.substring(5));
-                    markDone(list, index);
-                } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                    print("error in marking tasks!");
-                }
-            } else if (input.startsWith("unmark")) {
-                try {
-                    Integer index = Integer.parseInt(input.substring(7));
-                    markUndone(list, index);
-                } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                    print("error in unmarking tasks!");
-                }
-            } else {
-                Task task = new Task(input);
-                list.add(task);
-                print("added: " + input);
+            String cmd = input.split("\\s+")[0];
+
+            switch (cmd) {
+                case "bye":
+                    flag = false;
+                    break;
+                case "list":
+                    printList(list);
+                    break;
+                case "mark":
+                case "unmark":
+                    try {
+                        Integer index = Integer.parseInt(input.substring(cmd.length() + 1));
+                        if (cmd.equals("mark"))
+                            markDone(list, index);
+                        else
+                            markUndone(list, index);
+                    } catch (NumberFormatException e) {
+                        print("index provided is not a number!");
+                    } catch (IndexOutOfBoundsException e) {
+                        print("missing index argument!");
+                    }
+                    break;
+                case "todo":
+                    Todo todo = new Todo(input.substring(cmd.length() + 1));
+                    addTask(list, todo);
+                    break;
+                default:
+                    print(input);
             }
         }
 

@@ -1,5 +1,5 @@
 public class Task {
-    private String description;
+    private final String description;
     private boolean isDone;
 
     public Task(String description) {
@@ -7,12 +7,18 @@ public class Task {
         this.isDone = false;
     }
 
-    public void markDone() {
+    public boolean markDone() {
+        if (this.isDone)
+            return false;
         this.isDone = true;
+        return true;
     }
 
-    public void markUndone() {
+    public boolean markUndone() {
+        if (!this.isDone)
+            return false;
         this.isDone = false;
+        return true;
     }
 
     @Override
