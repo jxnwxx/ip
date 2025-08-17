@@ -101,6 +101,17 @@ public class Peppy {
                     Todo todo = new Todo(input.substring(cmd.length() + 1));
                     addTask(list, todo);
                     break;
+                case "deadline":
+                    try {
+                        String[] split = input.substring(cmd.length() + 1).split("/by ");
+                        Deadline deadline = new Deadline(split[0].trim(),
+                                split[1]);
+                        addTask(list, deadline);
+
+                    } catch (IndexOutOfBoundsException e) {
+                        print("missing \"/by\" argument!");
+                    }
+                    break;
                 default:
                     print(input);
             }
