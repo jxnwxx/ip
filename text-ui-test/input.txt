@@ -1,14 +1,19 @@
 list
-todo borrow book
+todo
+mark 1
 todo read book
-deadline return book /by Tuesday
-event project meeting /from Wednesday 2pm /to 3pm
-todo play chess
+deadline return book /by Thursday 2pm
+event cs2103 group meeting @ library /from Friday 2pm /to 5pm
 list
+deadline submit hw /by
+event dinner with friends /from /to 2pm
 mark 1
 mark 1
 list
 mark 3
+list
 unmark 1
 list
+cat
+
 bye

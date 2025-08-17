@@ -3,71 +3,79 @@
 	 What can I do for you?
 	____________________________________________________________
 	____________________________________________________________
-	 There's nothing in the list!
+	 There's nothing in the list! Try adding some tasks!
 	____________________________________________________________
 	____________________________________________________________
-	 Got it. I've added this task:
-	   [T][ ] borrow book
-	 Now you have 1 task in the list.
+	 Error: todo arguments incorrect!
+	 Usage: todo <description>
+	____________________________________________________________
+	____________________________________________________________
+	 Error: Index out of range!
 	____________________________________________________________
 	____________________________________________________________
 	 Got it. I've added this task:
 	   [T][ ] read book
+	 Now you have 1 task in the list.
+	____________________________________________________________
+	____________________________________________________________
+	 Got it. I've added this task:
+	   [D][ ] return book (by: Thursday 2pm)
 	 Now you have 2 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
 	 Got it. I've added this task:
-	   [D][ ] return book (by: Tuesday)
+	   [E][ ] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
 	 Now you have 3 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
-	 Got it. I've added this task:
-	   [E][ ] project meeting (from: Wednesday 2pm to: 3pm)
-	 Now you have 4 tasks in the list.
-	____________________________________________________________
-	____________________________________________________________
-	 Got it. I've added this task:
-	   [T][ ] play chess
-	 Now you have 5 tasks in the list.
-	____________________________________________________________
-	____________________________________________________________
 	 Here are the tasks in your list:
-	 1. [T][ ] borrow book 
-	 2. [T][ ] read book 
-	 3. [D][ ] return book (by: Tuesday) 
-	 4. [E][ ] project meeting (from: Wednesday 2pm to: 3pm) 
-	 5. [T][ ] play chess
+	 1. [T][ ] read book 
+	 2. [D][ ] return book (by: Thursday 2pm) 
+	 3. [E][ ] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	____________________________________________________________
+	____________________________________________________________
+	 Error: deadline arguments incorrect!
+	 Usage: deadline <description> /by <due>
+	____________________________________________________________
+	____________________________________________________________
+	 Error: event arguments incorrect!
+	 Usage: event <description> /from <start_date> /to <end_date>
 	____________________________________________________________
 	____________________________________________________________
 	 Nice! I've marked this task as done:
-	    [T][X] borrow book
+	    [T][X] read book
 	____________________________________________________________
 	____________________________________________________________
-	 Task already marked as done!
+	 Error: Task already marked as done!
 	____________________________________________________________
 	____________________________________________________________
 	 Here are the tasks in your list:
-	 1. [T][X] borrow book 
-	 2. [T][ ] read book 
-	 3. [D][ ] return book (by: Tuesday) 
-	 4. [E][ ] project meeting (from: Wednesday 2pm to: 3pm) 
-	 5. [T][ ] play chess
+	 1. [T][X] read book 
+	 2. [D][ ] return book (by: Thursday 2pm) 
+	 3. [E][ ] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
 	____________________________________________________________
 	____________________________________________________________
 	 Nice! I've marked this task as done:
-	    [D][X] return book (by: Tuesday)
+	    [E][X] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	____________________________________________________________
+	____________________________________________________________
+	 Here are the tasks in your list:
+	 1. [T][X] read book 
+	 2. [D][ ] return book (by: Thursday 2pm) 
+	 3. [E][X] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
 	____________________________________________________________
 	____________________________________________________________
 	 Nice! I've marked this task as not done yet:
-	   [T][ ] borrow book
+	   [T][ ] read book
 	____________________________________________________________
 	____________________________________________________________
 	 Here are the tasks in your list:
-	 1. [T][ ] borrow book 
-	 2. [T][ ] read book 
-	 3. [D][X] return book (by: Tuesday) 
-	 4. [E][ ] project meeting (from: Wednesday 2pm to: 3pm) 
-	 5. [T][ ] play chess
+	 1. [T][ ] read book 
+	 2. [D][ ] return book (by: Thursday 2pm) 
+	 3. [E][X] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	____________________________________________________________
+	____________________________________________________________
+	 Error: I do not know this command... T^T
 	____________________________________________________________
 	____________________________________________________________
 	 Bye. Hope to see you again soon!
