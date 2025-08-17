@@ -74,6 +74,20 @@ public class Peppy {
         }
     }
 
+    public static void deleteTask(ArrayList<Task> list, Integer index) throws PeppyEditException {
+        if (index < list.size() && index > 0) {
+            Task task = list.get(index - 1);
+            list.remove(task);
+            print("Noted. I've removed this task:",
+                    String.format("  %s", task),
+                    String.format("Now you have %d task%s in the list.",
+                            list.size(),
+                            (list.size() > 1) ? "s" : ""));
+        } else {
+            throw new PeppyEditException("Error: Index out of range!");
+        }
+    }
+
     public static void main(String[] args) throws PeppyException {
         boolean flag = true;
         Scanner scanner = new Scanner(System.in);
@@ -158,6 +172,19 @@ public class Peppy {
                         } else {
                             throw new PeppyInvalidCommandException("Error: event arguments incorrect!\n"
                                     + "\t Usage: event <description> /from <start_date> /to <end_date>");
+                        }
+                        break;
+                    case DELETE:
+                        try {
+                            if (argsList.length == 1) {
+                                Integer index = Integer.parseInt(argsList[0]);
+                                deleteTask(list, index);
+                            } else {
+                                throw new PeppyInvalidCommandException("Error: delete arguments incorrect!\n"
+                                        + "\t Usage: delete <index>");
+                            }
+                        } catch (NumberFormatException e) {
+                            throw new PeppyInvalidCommandException("Error: Index provided is not a number!");
                         }
                         break;
                 }

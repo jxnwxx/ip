@@ -13,6 +13,9 @@
 	 Error: Index out of range!
 	____________________________________________________________
 	____________________________________________________________
+	 Error: Index out of range!
+	____________________________________________________________
+	____________________________________________________________
 	 Got it. I've added this task:
 	   [T][ ] read book
 	 Now you have 1 task in the list.
@@ -73,6 +76,16 @@
 	 1. [T][ ] read book 
 	 2. [D][ ] return book (by: Thursday 2pm) 
 	 3. [E][X] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	____________________________________________________________
+	____________________________________________________________
+	 Noted. I've removed this task:
+	   [T][ ] read book
+	 Now you have 2 tasks in the list.
+	____________________________________________________________
+	____________________________________________________________
+	 Here are the tasks in your list:
+	 1. [D][ ] return book (by: Thursday 2pm) 
+	 2. [E][X] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
 	____________________________________________________________
 	____________________________________________________________
 	 Error: I do not know this command... T^T

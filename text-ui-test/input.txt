@@ -1,6 +1,7 @@
 list
 todo
 mark 1
+delete 1
 todo read book
 deadline return book /by Thursday 2pm
 event cs2103 group meeting @ library /from Friday 2pm /to 5pm
@@ -13,6 +14,8 @@ list
 mark 3
 list
 unmark 1
+list
+delete 1
 list
 cat
 
