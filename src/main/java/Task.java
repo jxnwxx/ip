@@ -25,4 +25,8 @@ public class Task {
     public String toString() {
         return String.format("[%c] %s", this.isDone ? 'X' : ' ',this.description);
     }
+
+    public String toDataString() {
+        return String.format("%d|%s", this.isDone ? 1 : 0, this.description);
+    }
 }
