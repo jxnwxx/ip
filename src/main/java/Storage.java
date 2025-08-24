@@ -39,27 +39,35 @@ public class Storage {
 
             while (scanner.hasNext()) {
                 String[] lineSplit = scanner.nextLine().split("\\|");
-                Task task = switch (lineSplit[0].trim()) {
-                    case "T" -> new Todo(lineSplit[2].trim());
-                    case "D" -> new Deadline(lineSplit[2].trim(), lineSplit[3].trim());
-                    case "E" -> new Event(lineSplit[2].trim(), lineSplit[3].trim(), lineSplit[4].trim());
-                    default -> throw new PeppyFileException("PeppyFileException: Unknown task in data file...");
-                };
-
-                if (lineSplit[1].trim().equals("1"))
-                    task.markDone();
-
+                Task task = getTask(lineSplit);
                 list.add(task);
             }
             return list;
-        } catch (FileNotFoundException | IndexOutOfBoundsException e) {
-            System.out.println("ERROR!!! The data file was corrupted...");
+        } catch (FileNotFoundException e) {
+            Peppy.print("ERROR!!! The data file was not found...");
         } catch (PeppyException e) {
-            System.out.println(e.getMessage());
+            Peppy.print(e.getMessage());
         }
         wipeFile();
         return new ArrayList<>();
 
+    }
+
+    private static Task getTask(String[] lineSplit) throws PeppyFileException {
+        try {
+            Task task = switch (lineSplit[0].trim()) {
+                case "T" -> new Todo(lineSplit[2].trim());
+                case "D" -> new Deadline(lineSplit[2].trim(), lineSplit[3].trim());
+                case "E" -> new Event(lineSplit[2].trim(), lineSplit[3].trim(), lineSplit[4].trim());
+                default -> throw new PeppyFileException("PeppyFileException: Unknown task in data file...");
+            };
+
+            if (lineSplit[1].trim().equals("1"))
+                task.markDone();
+            return task;
+        } catch (IndexOutOfBoundsException e) {
+            throw new PeppyFileException("PeppyFileException: The data file was corrupted...");
+        }
     }
 
     public void saveData(ArrayList<Task> list) throws PeppyFileException {
