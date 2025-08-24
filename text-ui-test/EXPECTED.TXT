@@ -22,27 +22,26 @@
 	____________________________________________________________
 	____________________________________________________________
 	 Got it. I've added this task:
-	   [D][ ] return book (by: Thursday 2pm)
+	   [D][ ] return book (by: 10/Aug/2025 10:30am)
 	 Now you have 2 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
 	 Got it. I've added this task:
-	   [E][ ] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	   [E][ ] cs2103 group meeting @ library (from: 10/Aug/2025 01:30pm to: 10/Aug/2025 01:50pm)
 	 Now you have 3 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
 	 Here are the tasks in your list:
 	 1. [T][ ] read book 
-	 2. [D][ ] return book (by: Thursday 2pm) 
-	 3. [E][ ] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	 2. [D][ ] return book (by: 10/Aug/2025 10:30am) 
+	 3. [E][ ] cs2103 group meeting @ library (from: 10/Aug/2025 01:30pm to: 10/Aug/2025 01:50pm)
 	____________________________________________________________
 	____________________________________________________________
 	 Error: deadline arguments incorrect!
 	 Usage: deadline <description> /by <due>
 	____________________________________________________________
 	____________________________________________________________
-	 Error: event arguments incorrect!
-	 Usage: event <description> /from <start_date> /to <end_date>
+	 PeppyInvalidCommandException: from date is after to date
 	____________________________________________________________
 	____________________________________________________________
 	 Nice! I've marked this task as done:
@@ -54,18 +53,18 @@
 	____________________________________________________________
 	 Here are the tasks in your list:
 	 1. [T][X] read book 
-	 2. [D][ ] return book (by: Thursday 2pm) 
-	 3. [E][ ] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	 2. [D][ ] return book (by: 10/Aug/2025 10:30am) 
+	 3. [E][ ] cs2103 group meeting @ library (from: 10/Aug/2025 01:30pm to: 10/Aug/2025 01:50pm)
 	____________________________________________________________
 	____________________________________________________________
 	 Nice! I've marked this task as done:
-	    [E][X] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	    [E][X] cs2103 group meeting @ library (from: 10/Aug/2025 01:30pm to: 10/Aug/2025 01:50pm)
 	____________________________________________________________
 	____________________________________________________________
 	 Here are the tasks in your list:
 	 1. [T][X] read book 
-	 2. [D][ ] return book (by: Thursday 2pm) 
-	 3. [E][X] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	 2. [D][ ] return book (by: 10/Aug/2025 10:30am) 
+	 3. [E][X] cs2103 group meeting @ library (from: 10/Aug/2025 01:30pm to: 10/Aug/2025 01:50pm)
 	____________________________________________________________
 	____________________________________________________________
 	 Nice! I've marked this task as not done yet:
@@ -74,8 +73,8 @@
 	____________________________________________________________
 	 Here are the tasks in your list:
 	 1. [T][ ] read book 
-	 2. [D][ ] return book (by: Thursday 2pm) 
-	 3. [E][X] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	 2. [D][ ] return book (by: 10/Aug/2025 10:30am) 
+	 3. [E][X] cs2103 group meeting @ library (from: 10/Aug/2025 01:30pm to: 10/Aug/2025 01:50pm)
 	____________________________________________________________
 	____________________________________________________________
 	 Noted. I've removed this task:
@@ -84,8 +83,8 @@
 	____________________________________________________________
 	____________________________________________________________
 	 Here are the tasks in your list:
-	 1. [D][ ] return book (by: Thursday 2pm) 
-	 2. [E][X] cs2103 group meeting @ library (from: Friday 2pm to: 5pm)
+	 1. [D][ ] return book (by: 10/Aug/2025 10:30am) 
+	 2. [E][X] cs2103 group meeting @ library (from: 10/Aug/2025 01:30pm to: 10/Aug/2025 01:50pm)
 	____________________________________________________________
 	____________________________________________________________
 	 Error: I do not know this command... T^T

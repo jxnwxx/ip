@@ -53,7 +53,7 @@ public class Storage {
 
     }
 
-    private static Task getTask(String[] lineSplit) throws PeppyFileException {
+    private static Task getTask(String[] lineSplit) throws PeppyFileException, PeppyInvalidCommandException {
         try {
             Task task = switch (lineSplit[0].trim()) {
                 case "T" -> new Todo(lineSplit[2].trim());
