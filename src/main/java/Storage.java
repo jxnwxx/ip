@@ -30,8 +30,8 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> loadData() throws PeppyException {
-        ArrayList<Task> list = new ArrayList<>();
+    public TaskList loadData() throws PeppyException {
+        TaskList tasks = new TaskList();
         try {
             if (!file.exists())
                 createFile();
@@ -40,16 +40,17 @@ public class Storage {
             while (scanner.hasNext()) {
                 String[] lineSplit = scanner.nextLine().split("\\|");
                 Task task = getTask(lineSplit);
-                list.add(task);
+                tasks.addTask(task);
             }
-            return list;
+
+            return tasks;
         } catch (FileNotFoundException e) {
             Peppy.print("ERROR!!! The data file was not found...");
         } catch (PeppyException e) {
             Peppy.print(e.getMessage());
         }
         wipeFile();
-        return new ArrayList<>();
+        return new TaskList();
 
     }
 
@@ -70,11 +71,11 @@ public class Storage {
         }
     }
 
-    public void saveData(ArrayList<Task> list) throws PeppyFileException {
+    public void saveData(TaskList tasks) throws PeppyFileException {
         try {
             FileWriter fw = new FileWriter(file, false);
-            for (Task task : list)
-                fw.write(task.toDataString() + "\n");
+            for (int i = 0; i < tasks.getSize(); i++)
+                fw.write(tasks.getTask(i).toDataString() + "\n");
             fw.close();
         } catch (IOException e) {
             throw new PeppyFileException("PeppyFileException: Could not write to file... T^T");

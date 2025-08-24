@@ -26,47 +26,32 @@ public class Peppy {
         }
     }
 
-    public static void addTask(ArrayList<Task> list, Task task) throws PeppyFileException {
-        list.add(task);
+    public static void addTask(TaskList tasks, Task task) throws PeppyFileException {
+        tasks.addTask(task);
         print("Got it. I've added this task:",
                 String.format("  %s", task),
                 String.format("Now you have %d task%s in the list.",
-                        list.size(),
-                        (list.size() > 1) ? "s" : ""));
+                        tasks.getSize(),
+                        (tasks.getSize() > 1) ? "s" : ""));
     }
 
-    public static void deleteTask(ArrayList<Task> list, Integer index) throws PeppyEditException {
-        if (index <= list.size() && index > 0) {
-            Task task = list.get(index - 1);
-            list.remove(task);
+    public static void deleteTask(TaskList tasks, Integer index) throws PeppyEditException {
+        if (index <= tasks.getSize() && index > 0) {
+            Task task = tasks.getTask(index - 1);
+            tasks.deleteTask(index - 1);
             print("Noted. I've removed this task:",
                     String.format("  %s", task),
                     String.format("Now you have %d task%s in the list.",
-                            list.size(),
-                            (list.size() > 1) ? "s" : ""));
+                            tasks.getSize(),
+                            (tasks.getSize() > 1) ? "s" : ""));
         } else {
             throw new PeppyEditException("Error: Index out of range!");
         }
     }
 
-    public static void printList(ArrayList<Task> list) {
-        if (list.isEmpty()) {
-            print("There's nothing in the list! Try adding some tasks!");
-        } else {
-            StringBuilder result = new StringBuilder();
-            for (int i = 0; i < list.size(); i++) {
-                result.append(String.format("%d. %s \n\t ",
-                        i + 1,
-                        list.get(i).toString()));
-            }
-            print("Here are the tasks in your list:",
-                    result.toString().stripTrailing());
-        }
-    }
-
-    public static void markDone(ArrayList<Task> list, Integer index) throws PeppyEditException {
-        if (index <= list.size() && index > 0) {
-            Task task = list.get(index - 1);
+    public static void markDone(TaskList tasks, Integer index) throws PeppyEditException {
+        if (index <= tasks.getSize() && index > 0) {
+            Task task = tasks.getTask(index - 1);
             if (task.markDone())
                 print("Nice! I've marked this task as done:",
                         String.format("   %s", task));
@@ -77,9 +62,9 @@ public class Peppy {
         }
     }
 
-    public static void markUndone(ArrayList<Task> list, Integer index) throws PeppyEditException {
-        if (index <= list.size() && index > 0) {
-            Task task = list.get(index - 1);
+    public static void markUndone(TaskList tasks, Integer index) throws PeppyEditException {
+        if (index <= tasks.getSize() && index > 0) {
+            Task task = tasks.getTask(index - 1);
             if (task.markUndone())
                 print("Nice! I've marked this task as not done yet:",
                         String.format("  %s", task));
@@ -94,7 +79,7 @@ public class Peppy {
         boolean flag = true;
         Scanner scanner = new Scanner(System.in);
         Storage storage = new Storage(FILE_PATH);
-        ArrayList<Task> list = storage.loadData();
+        TaskList tasks = storage.loadData();
 
         print("Hello! I'm Peppy", "What can I do for you?");
 
@@ -112,7 +97,7 @@ public class Peppy {
                     flag = false;
                     break;
                 case LIST:
-                    printList(list);
+                    print(tasks.toString());
                     break;
                 case MARK:
                 case UNMARK:
@@ -120,9 +105,9 @@ public class Peppy {
                         if (argsList.length == 1) {
                             Integer index = Integer.parseInt(argsList[0]);
                             if (cmd.getAction() == Action.MARK)
-                                markDone(list, index);
+                                markDone(tasks, index);
                             else
-                                markUndone(list, index);
+                                markUndone(tasks, index);
                         } else {
                             throw new PeppyInvalidCommandException("Error: mark arguments incorrect!\n"
                                     + "\t Usage: mark <index>");
@@ -135,7 +120,7 @@ public class Peppy {
                 case TODO:
                     try {
                         Todo todo = new Todo(argsList[0]);
-                        addTask(list, todo);
+                        addTask(tasks, todo);
                     } catch (IndexOutOfBoundsException e) {
                         throw new PeppyInvalidCommandException("Error: todo arguments incorrect!\n"
                                 + "\t Usage: todo <description>");
@@ -148,7 +133,7 @@ public class Peppy {
 
                         if (!description.isEmpty() && !by.isEmpty()) {
                             Deadline deadline = new Deadline(description, by);
-                            addTask(list, deadline);
+                            addTask(tasks, deadline);
                         } else {
                             throw new PeppyInvalidCommandException("Error: deadline arguments incorrect!\n"
                                     + "\t Usage: deadline <description> /by <due>");
@@ -168,7 +153,7 @@ public class Peppy {
 
                         if (!description.isEmpty() && !from.isEmpty() && !to.isEmpty()) {
                             Event event = new Event(description, from, to);
-                            addTask(list, event);
+                            addTask(tasks, event);
                         } else {
                             throw new PeppyInvalidCommandException("Error: event arguments incorrect!\n"
                                     + "\t Usage: event <description> /from <start_date> /to <end_date>");
@@ -182,7 +167,7 @@ public class Peppy {
                     try {
                         if (argsList.length == 1) {
                             Integer index = Integer.parseInt(argsList[0]);
-                            deleteTask(list, index);
+                            deleteTask(tasks, index);
                         } else {
                             throw new PeppyInvalidCommandException("Error: delete arguments incorrect!\n"
                                     + "\t Usage: delete <index>");
@@ -193,7 +178,7 @@ public class Peppy {
                     }
                     break;
                 }
-                storage.saveData(list);
+                storage.saveData(tasks);
             } catch (PeppyException e) {
                 print(e.getMessage());
             }
