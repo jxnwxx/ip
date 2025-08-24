@@ -2,7 +2,9 @@ public class Task {
     private final String description;
     private boolean isDone;
 
-    public Task(String description) {
+    public Task(String description) throws PeppyInvalidCommandException {
+        if (description.isBlank())
+            throw new PeppyInvalidCommandException("PeppyInvalidCommandException: description is empty");
         this.description = description;
         this.isDone = false;
     }

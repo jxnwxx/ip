@@ -100,7 +100,8 @@ public class Peppy {
 
         while (flag) {
             try {
-                String input = scanner.nextLine();
+                String input = scanner.nextLine()
+                        .replaceAll("\\|", "");
                 if (input.isBlank())
                     continue;
                 Command cmd = parseInput(input);
@@ -127,8 +128,8 @@ public class Peppy {
                                     + "\t Usage: mark <index>");
                         }
                     } catch (NumberFormatException e) {
-                        throw new PeppyInvalidCommandException("Error: Index provided is not valid!\n" +
-                                "\t Usage: mark <index>");
+                        throw new PeppyInvalidCommandException("Error: Index provided is not valid!\n"
+                                + "\t Usage: mark <index>");
                     }
                     break;
                 case TODO:
@@ -187,8 +188,8 @@ public class Peppy {
                                     + "\t Usage: delete <index>");
                         }
                     } catch (NumberFormatException e) {
-                        throw new PeppyInvalidCommandException("Error: Index provided is not valid!\n" +
-                                "\t Usage: delete <index>");
+                        throw new PeppyInvalidCommandException("Error: Index provided is not valid!\n"
+                                + "\t Usage: delete <index>");
                     }
                     break;
                 }
