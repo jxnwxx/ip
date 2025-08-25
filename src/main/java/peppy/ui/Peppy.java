@@ -1,5 +1,10 @@
-import java.util.Scanner;
-import java.util.ArrayList;
+package peppy.ui;
+
+import peppy.exception.PeppyException;
+import peppy.parser.Command;
+import peppy.parser.Parser;
+import peppy.storage.Storage;
+import peppy.task.TaskList;
 
 public class Peppy {
     private static final String DEFAULT_FILE_PATH = "data/peppy.txt";
@@ -33,7 +38,7 @@ public class Peppy {
         }
     }
 
-    public static void main(String[] args) throws PeppyException {
+    public static void main(String[] args) {
         new Peppy(DEFAULT_FILE_PATH).run();
     }
 }

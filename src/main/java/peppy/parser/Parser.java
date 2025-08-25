@@ -1,3 +1,8 @@
+package peppy.parser;
+
+import peppy.exception.PeppyInvalidCommandException;
+import peppy.exception.PeppyUnknownCommandException;
+
 public class Parser {
     public static Command parseInput(String input) throws PeppyUnknownCommandException {
         try {

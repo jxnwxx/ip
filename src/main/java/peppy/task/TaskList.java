@@ -1,4 +1,9 @@
+package peppy.task;
+
 import java.util.ArrayList;
+
+import peppy.exception.PeppyEditException;
+import peppy.ui.Ui;
 
 public class TaskList {
     private final ArrayList<Task> tasks;

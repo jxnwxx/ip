@@ -1,10 +1,15 @@
+package peppy.task;
+
+import peppy.exception.PeppyInvalidCommandException;
+
 public class Task {
     private final String description;
     private boolean isDone;
 
     public Task(String description) throws PeppyInvalidCommandException {
         if (description.isBlank())
-            throw new PeppyInvalidCommandException("PeppyInvalidCommandException: description is empty");
+            throw new PeppyInvalidCommandException(
+                    "peppy.exception.PeppyInvalidCommandException: description is empty");
         this.description = description;
         this.isDone = false;
     }
@@ -25,7 +30,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return String.format("[%c] %s", this.isDone ? 'X' : ' ',this.description);
+        return String.format("[%c] %s", this.isDone ? 'X' : ' ', this.description);
     }
 
     public String toDataString() {

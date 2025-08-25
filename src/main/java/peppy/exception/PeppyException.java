@@ -1,4 +1,6 @@
-public class PeppyException extends Exception{
+package peppy.exception;
+
+public class PeppyException extends Exception {
     public PeppyException(String message) {
         super(message);
     }

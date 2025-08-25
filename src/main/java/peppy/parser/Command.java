@@ -1,3 +1,16 @@
+package peppy.parser;
+
+import peppy.exception.PeppyEditException;
+import peppy.exception.PeppyException;
+import peppy.exception.PeppyInvalidCommandException;
+import peppy.storage.Storage;
+import peppy.task.Deadline;
+import peppy.task.Event;
+import peppy.task.Task;
+import peppy.task.TaskList;
+import peppy.task.Todo;
+import peppy.ui.Ui;
+
 public class Command {
     private final Action action;
     private final String[] args;
@@ -33,7 +46,7 @@ public class Command {
             } else {
                 if (task.markUndone())
                     ui.printString("Nice! I've marked this task as not done yet:",
-                        String.format("  %s", task));
+                            String.format("  %s", task));
                 else
                     throw new PeppyEditException("Task already marked as undone!");
             }
@@ -68,7 +81,7 @@ public class Command {
                 if (argsList.length == 1) {
                     Todo todo = new Todo(argsList[0]);
                     tasks.addTask(todo, ui, true);
-                } else  {
+                } else {
                     throw new PeppyInvalidCommandException("todo arguments incorrect!\n"
                             + "\t Usage: todo <description>");
                 }

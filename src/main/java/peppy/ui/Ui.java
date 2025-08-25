@@ -1,4 +1,9 @@
+package peppy.ui;
+
 import java.util.Scanner;
+
+import peppy.exception.PeppyUnknownCommandException;
+import peppy.task.TaskList;
 
 public class Ui {
     private static final String LINE_SEPARATOR = "____________________________________________________________";

@@ -1,3 +1,7 @@
+package peppy.task;
+
+import peppy.exception.PeppyInvalidCommandException;
+
 public class Todo extends Task {
     public Todo(String description) throws PeppyInvalidCommandException {
         super(description);
