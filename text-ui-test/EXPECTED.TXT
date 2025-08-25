@@ -6,14 +6,20 @@
 	 There's nothing in the list! Try adding some tasks!
 	____________________________________________________________
 	____________________________________________________________
-	 Error: todo arguments incorrect!
+	 InvalidCommand: todo arguments incorrect!
 	 Usage: todo <description>
 	____________________________________________________________
 	____________________________________________________________
-	 Error: Index out of range!
+	 InvalidCommand: Index provided is not an integer!
 	____________________________________________________________
 	____________________________________________________________
-	 Error: Index out of range!
+	 InvalidCommand: Index provided is not an integer!
+	____________________________________________________________
+	____________________________________________________________
+	 EditException: Index out of range!
+	____________________________________________________________
+	____________________________________________________________
+	 EditException: Error: Index out of range!
 	____________________________________________________________
 	____________________________________________________________
 	 Got it. I've added this task:
@@ -37,18 +43,18 @@
 	 3. [E][ ] cs2103 group meeting @ library (from: 10/Aug/2025 01:30pm to: 10/Aug/2025 01:50pm)
 	____________________________________________________________
 	____________________________________________________________
-	 Error: deadline arguments incorrect!
+	 InvalidCommand: deadline arguments incorrect!
 	 Usage: deadline <description> /by <due>
 	____________________________________________________________
 	____________________________________________________________
-	 PeppyInvalidCommandException: from date is after to date
+	 InvalidCommand: start_date is after end_date
 	____________________________________________________________
 	____________________________________________________________
 	 Nice! I've marked this task as done:
 	    [T][X] read book
 	____________________________________________________________
 	____________________________________________________________
-	 Error: Task already marked as done!
+	 EditException: Task already marked as done!
 	____________________________________________________________
 	____________________________________________________________
 	 Here are the tasks in your list:
@@ -87,8 +93,8 @@
 	 2. [E][X] cs2103 group meeting @ library (from: 10/Aug/2025 01:30pm to: 10/Aug/2025 01:50pm)
 	____________________________________________________________
 	____________________________________________________________
-	 Error: I do not know this command... T^T
+	 UnknownCommand: I do not know this command... T^T
 	____________________________________________________________
 	____________________________________________________________
-	 Bye. Hope to see you again soon!
+	 Bye bye! See you next time!
 	____________________________________________________________

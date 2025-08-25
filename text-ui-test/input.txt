@@ -1,5 +1,7 @@
 list
 todo
+mark a
+delete b
 mark 1
 delete 1
 todo read book
