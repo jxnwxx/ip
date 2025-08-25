@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Storage {
     private final File file;
@@ -30,7 +29,7 @@ public class Storage {
         }
     }
 
-    public TaskList loadData() throws PeppyException {
+    public TaskList loadData(Ui ui) throws PeppyException {
         TaskList tasks = new TaskList();
         try {
             if (!file.exists())
@@ -40,14 +39,14 @@ public class Storage {
             while (scanner.hasNext()) {
                 String[] lineSplit = scanner.nextLine().split("\\|");
                 Task task = getTask(lineSplit);
-                tasks.addTask(task);
+                tasks.addTask(task, ui, false);
             }
 
             return tasks;
         } catch (FileNotFoundException e) {
-            Peppy.print("ERROR!!! The data file was not found...");
+            ui.printString("ERROR!!! The data file was not found...");
         } catch (PeppyException e) {
-            Peppy.print(e.getMessage());
+            ui.printString(e.getMessage());
         }
         wipeFile();
         return new TaskList();

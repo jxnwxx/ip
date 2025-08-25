@@ -7,20 +7,29 @@ public class TaskList {
         this.tasks = new ArrayList<Task>();
     }
 
-    public void addTask(Task task) {
+    public void addTask(Task task, Ui ui, boolean shouldPrint) {
         tasks.add(task);
+        if (shouldPrint) {
+            ui.printString("Got it. I've added this task:",
+                    String.format("  %s", task),
+                    String.format("Now you have %d task%s in the list.",
+                            tasks.size(),
+                            (tasks.size() > 1) ? "s" : ""));
+        }
     }
 
-    public void deleteTask(int index) {
-        tasks.remove(index);
-    }
-
-    public void markTask(int index) {
-        this.getTask(index).markDone();
-    }
-
-    public void unmarkTask(int index) {
-        this.getTask(index).markUndone();
+    public void deleteTask(int index, Ui ui) throws PeppyEditException {
+        if (index <= tasks.size() && index > 0) {
+            Task task = getTask(index - 1);
+            tasks.remove(index - 1);
+            ui.printString("Noted. I've removed this task:",
+                    String.format("  %s", task),
+                    String.format("Now you have %d task%s in the list.",
+                            tasks.size(),
+                            (tasks.size() > 1) ? "s" : ""));
+        } else {
+            throw new PeppyEditException("Error: Index out of range!");
+        }
     }
 
     public int getSize() {

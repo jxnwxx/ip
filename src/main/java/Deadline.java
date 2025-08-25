@@ -12,7 +12,7 @@ public class Deadline extends Task {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
             this.by = LocalDateTime.from(formatter.parse(by));
         } catch (DateTimeException e) {
-            throw new PeppyInvalidCommandException("PeppyInvalidCommandException: Invalid date time format "
+            throw new PeppyInvalidCommandException("Invalid date time format "
                     + "(dd-MM-yyyy HHmm)");
         }
     }
