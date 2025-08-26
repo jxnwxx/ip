@@ -54,7 +54,7 @@ public class Storage {
                 Task task = getTask(lineSplit);
                 tasks.addTask(task, ui, false);
             }
-
+            scanner.close();
             return tasks;
         } catch (FileNotFoundException e) {
             ui.printString("ERROR!!! The data file was not found...");
