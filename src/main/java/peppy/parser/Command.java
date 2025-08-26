@@ -1,5 +1,7 @@
 package peppy.parser;
 
+import java.util.Arrays;
+
 import peppy.exception.PeppyEditException;
 import peppy.exception.PeppyException;
 import peppy.exception.PeppyInvalidCommandException;
@@ -21,6 +23,18 @@ public class Command {
         this.action = action;
         this.args = args;
         this.isExit = false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        } else {
+            Command other = (Command) obj;
+            return this.action == other.action
+                    && Arrays.equals(this.args, other.args)
+                    && this.isExit == other.isExit;
+        }
     }
 
     private Action getAction() {
