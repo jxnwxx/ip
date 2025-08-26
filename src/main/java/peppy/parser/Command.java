@@ -3,6 +3,7 @@ package peppy.parser;
 import peppy.exception.PeppyEditException;
 import peppy.exception.PeppyException;
 import peppy.exception.PeppyInvalidCommandException;
+import peppy.exception.PeppyUnknownCommandException;
 import peppy.storage.Storage;
 import peppy.task.Deadline;
 import peppy.task.Event;
@@ -38,17 +39,19 @@ public class Command {
         if (index <= tasks.getSize() && index > 0) {
             Task task = tasks.getTask(index - 1);
             if (action == Action.MARK) {
-                if (task.markDone())
+                if (task.markDone()) {
                     ui.printString("Nice! I've marked this task as done:",
                             String.format("   %s", task));
-                else
+                } else {
                     throw new PeppyEditException("Task already marked as done!");
+                }
             } else {
-                if (task.markUndone())
+                if (task.markUndone()) {
                     ui.printString("Nice! I've marked this task as not done yet:",
                             String.format("  %s", task));
-                else
+                } else {
                     throw new PeppyEditException("Task already marked as undone!");
+                }
             }
         } else {
             throw new PeppyEditException("Index out of range!");
@@ -132,6 +135,8 @@ public class Command {
                             + "\t Usage: delete <index>");
                 }
                 break;
+            default:
+                throw new PeppyUnknownCommandException("I do not know this command... T^T");
             }
             storage.saveData(tasks);
         } catch (PeppyException e) {

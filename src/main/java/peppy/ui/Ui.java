@@ -19,8 +19,9 @@ public class Ui {
 
     public void printString(String... strings) {
         printLine();
-        for (String str : strings)
+        for (String str : strings) {
             System.out.println("\t " + str);
+        }
         printLine();
     }
 

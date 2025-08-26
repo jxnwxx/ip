@@ -19,7 +19,7 @@ public class TaskList {
                     String.format("  %s", task),
                     String.format("Now you have %d task%s in the list.",
                             tasks.size(),
-                            (tasks.size() > 1) ? "s" : ""));
+                            tasks.size() > 1 ? "s" : ""));
         }
     }
 
@@ -31,7 +31,7 @@ public class TaskList {
                     String.format("  %s", task),
                     String.format("Now you have %d task%s in the list.",
                             tasks.size(),
-                            (tasks.size() > 1) ? "s" : ""));
+                            tasks.size() > 1 ? "s" : ""));
         } else {
             throw new PeppyEditException("Error: Index out of range!");
         }

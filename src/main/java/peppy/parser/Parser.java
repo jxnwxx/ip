@@ -9,8 +9,9 @@ public class Parser {
             String[] inputSplit = input.split(" ", 2);
             Action action = Action.valueOf(inputSplit[0].toUpperCase());
             String[] argsList = {};
-            if (inputSplit.length == 2)
+            if (inputSplit.length == 2) {
                 argsList = inputSplit[1].split("/");
+            }
             return new Command(action, argsList);
         } catch (IllegalArgumentException e) {
             throw new PeppyUnknownCommandException("I do not know this command... T^T");

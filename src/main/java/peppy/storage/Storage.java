@@ -44,8 +44,9 @@ public class Storage {
     public TaskList loadData(Ui ui) throws PeppyException {
         TaskList tasks = new TaskList();
         try {
-            if (!file.exists())
+            if (!file.exists()) {
                 createFile();
+            }
             Scanner scanner = new Scanner(file);
 
             while (scanner.hasNext()) {
@@ -68,15 +69,16 @@ public class Storage {
     private static Task getTask(String[] lineSplit) throws PeppyFileException, PeppyInvalidCommandException {
         try {
             Task task = switch (lineSplit[0].trim()) {
-                case "T" -> new Todo(lineSplit[2].trim());
-                case "D" -> new Deadline(lineSplit[2].trim(), lineSplit[3].trim());
-                case "E" -> new Event(lineSplit[2].trim(), lineSplit[3].trim(), lineSplit[4].trim());
-                default -> throw new PeppyFileException(
-                        "peppy.exception.PeppyFileException: Unknown task in data file...");
+            case "T" -> new Todo(lineSplit[2].trim());
+            case "D" -> new Deadline(lineSplit[2].trim(), lineSplit[3].trim());
+            case "E" -> new Event(lineSplit[2].trim(), lineSplit[3].trim(), lineSplit[4].trim());
+            default -> throw new PeppyFileException(
+                    "peppy.exception.PeppyFileException: Unknown task in data file...");
             };
 
-            if (lineSplit[1].trim().equals("1"))
+            if (lineSplit[1].trim().equals("1")) {
                 task.markDone();
+            }
             return task;
         } catch (IndexOutOfBoundsException e) {
             throw new PeppyFileException("peppy.exception.PeppyFileException: The data file was corrupted...");
@@ -86,8 +88,9 @@ public class Storage {
     public void saveData(TaskList tasks) throws PeppyFileException {
         try {
             FileWriter fw = new FileWriter(file, false);
-            for (int i = 0; i < tasks.getSize(); i++)
+            for (int i = 0; i < tasks.getSize(); i++) {
                 fw.write(tasks.getTask(i).toDataString() + "\n");
+            }
             fw.close();
         } catch (IOException e) {
             throw new PeppyFileException("peppy.exception.PeppyFileException: Could not write to file... T^T");

@@ -7,23 +7,26 @@ public class Task {
     private boolean isDone;
 
     public Task(String description) throws PeppyInvalidCommandException {
-        if (description.isBlank())
+        if (description.isBlank()) {
             throw new PeppyInvalidCommandException(
                     "peppy.exception.PeppyInvalidCommandException: description is empty");
+        }
         this.description = description;
         this.isDone = false;
     }
 
     public boolean markDone() {
-        if (this.isDone)
+        if (this.isDone) {
             return false;
+        }
         this.isDone = true;
         return true;
     }
 
     public boolean markUndone() {
-        if (!this.isDone)
+        if (!this.isDone) {
             return false;
+        }
         this.isDone = false;
         return true;
     }

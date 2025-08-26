@@ -17,8 +17,9 @@ public class Event extends Task {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
             this.from = LocalDateTime.from(formatter.parse(from));
             this.to = LocalDateTime.from(formatter.parse(to));
-            if (this.from.isAfter(this.to))
+            if (this.from.isAfter(this.to)) {
                 throw new PeppyInvalidCommandException("start_date is after end_date");
+            }
         } catch (DateTimeException e) {
             throw new PeppyInvalidCommandException("Invalid date time format "
                     + "(dd-MM-yyyy HHmm)");
