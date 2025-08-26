@@ -28,7 +28,7 @@ public class Storage {
             file.getParentFile().mkdirs();
             file.createNewFile();
         } catch (IOException e) {
-            throw new PeppyFileException("peppy.exception.PeppyFileException: Could not create the file... T^T");
+            throw new PeppyFileException("Could not create the file... T^T");
         }
     }
 
@@ -37,7 +37,7 @@ public class Storage {
             FileWriter fw = new FileWriter(file, false);
             fw.close();
         } catch (IOException e) {
-            throw new PeppyFileException("peppy.exception.PeppyFileException: Could not write to file... T^T");
+            throw new PeppyFileException("Could not write to file... T^T");
         }
     }
 
@@ -72,8 +72,7 @@ public class Storage {
             case "T" -> new Todo(lineSplit[2].trim());
             case "D" -> new Deadline(lineSplit[2].trim(), lineSplit[3].trim());
             case "E" -> new Event(lineSplit[2].trim(), lineSplit[3].trim(), lineSplit[4].trim());
-            default -> throw new PeppyFileException(
-                    "peppy.exception.PeppyFileException: Unknown task in data file...");
+            default -> throw new PeppyFileException("Unknown task in data file...");
             };
 
             if (lineSplit[1].trim().equals("1")) {
@@ -81,7 +80,7 @@ public class Storage {
             }
             return task;
         } catch (IndexOutOfBoundsException e) {
-            throw new PeppyFileException("peppy.exception.PeppyFileException: The data file was corrupted...");
+            throw new PeppyFileException("The data file was corrupted...");
         }
     }
 
@@ -93,7 +92,7 @@ public class Storage {
             }
             fw.close();
         } catch (IOException e) {
-            throw new PeppyFileException("peppy.exception.PeppyFileException: Could not write to file... T^T");
+            throw new PeppyFileException("Could not write to file... T^T");
         }
     }
 }

@@ -8,8 +8,7 @@ public class Task {
 
     public Task(String description) throws PeppyInvalidCommandException {
         if (description.isBlank()) {
-            throw new PeppyInvalidCommandException(
-                    "peppy.exception.PeppyInvalidCommandException: description is empty");
+            throw new PeppyInvalidCommandException("description is empty");
         }
         this.description = description;
         this.isDone = false;
