@@ -6,10 +6,22 @@ import java.time.format.DateTimeFormatter;
 
 import peppy.exception.PeppyInvalidCommandException;
 
+/**
+ * Represents an Event task with a start date and end date.
+ */
 public class Event extends Task {
     private final LocalDateTime from;
     private final LocalDateTime to;
 
+    /**
+     * Constructs an Event object with a specified start date and end date.
+     *
+     * @param description Description of the task.
+     * @param from        Start date of the task.
+     * @param to          End date of the task.
+     * @throws PeppyInvalidCommandException If description is blank, or if from or to is not in the proper datetime
+     *                                      format, or from date is after to date.
+     */
     public Event(String description, String from, String to) throws PeppyInvalidCommandException {
         super(description);
 

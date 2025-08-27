@@ -14,11 +14,24 @@ import peppy.task.TaskList;
 import peppy.task.Todo;
 import peppy.ui.Ui;
 
+/**
+ * Represents the commands that Peppy can execute.
+ */
 public class Command {
     private final Action action;
     private final String[] args;
+    /**
+     * Determines if Peppy should exit
+     */
     private boolean isExit;
 
+    /**
+     * Constructs a Command object containing the action to be executed
+     * and the arguments of the action.
+     *
+     * @param action The action to be executed.
+     * @param args   The arguments of the action.
+     */
     public Command(Action action, String... args) {
         this.action = action;
         this.args = args;
@@ -49,6 +62,15 @@ public class Command {
         return isExit;
     }
 
+    /**
+     * Marks or unmarks a task in the TaskList based on the index provided.
+     *
+     * @param tasks  TaskList object containing all the tasks.
+     * @param index  Index of task in TaskList to be marked.
+     * @param ui     Ui object to print output.
+     * @param action Action enum to determine to mark or unmark the task.
+     * @throws PeppyEditException If task to be mark or unmark is already marked or unmarked respectively.
+     */
     public void markTask(TaskList tasks, Integer index, Ui ui, Action action) throws PeppyEditException {
         if (index <= tasks.getSize() && index > 0) {
             Task task = tasks.getTask(index - 1);
@@ -72,6 +94,13 @@ public class Command {
         }
     }
 
+    /**
+     * Executes the command based on the action and arguments provided.
+     *
+     * @param tasks   TaskList object to
+     * @param ui      Ui object to print output.
+     * @param storage Storage object to update any changes.
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             String[] argsList = getArgs();

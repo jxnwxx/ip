@@ -6,9 +6,19 @@ import java.time.format.DateTimeFormatter;
 
 import peppy.exception.PeppyInvalidCommandException;
 
+/**
+ * Represents a Deadline with a due date.
+ */
 public class Deadline extends Task {
     private final LocalDateTime by;
 
+    /**
+     * Constructs a Deadline object with a specified due date.
+     *
+     * @param description Description of the task.
+     * @param by          String form of due date of the task.
+     * @throws PeppyInvalidCommandException If description is blank or if by is not in the proper datetime format.
+     */
     public Deadline(String description, String by) throws PeppyInvalidCommandException {
         super(description);
 
