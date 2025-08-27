@@ -37,6 +37,27 @@ public class TaskList {
         }
     }
 
+    public void findTask(String input, Ui ui) {
+        StringBuilder result = new StringBuilder();
+        int found = 0;
+
+        for (int i = 0; i < getSize(); i++) {
+            Task task = getTask(i);
+            if (task.contains(input)) {
+                found++;
+                result.append(String.format("%d. %s \n\t ",
+                        found,
+                        tasks.get(i).toString()));
+            }
+        }
+        if (found > 0) {
+            ui.printString("Here are the matching tasks in your list:\n\t "
+                    + result.toString().stripTrailing());
+        } else {
+            ui.printString("No tasks found with the given keyword.");
+        }
+    }
+
     public int getSize() {
         return tasks.size();
     }

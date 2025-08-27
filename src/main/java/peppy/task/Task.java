@@ -30,6 +30,10 @@ public class Task {
         return true;
     }
 
+    public boolean contains(String input) {
+        return description.toLowerCase().contains(input.toLowerCase());
+    }
+
     @Override
     public String toString() {
         return String.format("[%c] %s", this.isDone ? 'X' : ' ', this.description);

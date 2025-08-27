@@ -149,6 +149,14 @@ public class Command {
                             + "\t Usage: delete <index>");
                 }
                 break;
+            case FIND:
+                if (argsList.length == 1) {
+                    tasks.findTask(argsList[0], ui);
+                } else {
+                    throw new PeppyInvalidCommandException("find arguments incorrect!\n"
+                            + "\t Usage: find <keyword>");
+                }
+                break;
             default:
                 throw new PeppyUnknownCommandException("I do not know this command... T^T");
             }
