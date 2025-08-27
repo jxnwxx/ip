@@ -6,12 +6,20 @@ import peppy.parser.Parser;
 import peppy.storage.Storage;
 import peppy.task.TaskList;
 
+/**
+ * Serves as the entry point for Peppy application.
+ */
 public class Peppy {
     private static final String DEFAULT_FILE_PATH = "data/peppy.txt";
     private final Storage storage;
     private final Ui ui;
     private TaskList tasks;
 
+    /**
+     * Constructs a new Peppy object containing Ui, Storage and Tasklist.
+     *
+     * @param filePath The file path to the Storage data file.
+     */
     public Peppy(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -23,6 +31,9 @@ public class Peppy {
         }
     }
 
+    /**
+     * Runs the Peppy application.
+     */
     public void run() {
         ui.printWelcome();
         boolean isExit = false;
@@ -38,6 +49,12 @@ public class Peppy {
         }
     }
 
+    /**
+     * The main entry point for the application.
+     *
+     * @param args Command-line arguments passed to the program.
+     *             These arguments are ignored in this program.
+     */
     public static void main(String[] args) {
         new Peppy(DEFAULT_FILE_PATH).run();
     }

@@ -2,21 +2,34 @@ package peppy.ui;
 
 import java.util.Scanner;
 
-import peppy.exception.PeppyUnknownCommandException;
 import peppy.task.TaskList;
 
+/**
+ * Handles printing the user interface.
+ */
 public class Ui {
     private static final String LINE_SEPARATOR = "____________________________________________________________";
     private final Scanner scanner;
 
+    /**
+     * Constructs an Ui object that is responsible for printing the user interface.
+     */
     public Ui() {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Prints a line separator
+     */
     public void printLine() {
         System.out.println("\t" + LINE_SEPARATOR);
     }
 
+    /**
+     * Prints the provided strings in a specified format.
+     *
+     * @param strings Strings to be printed.
+     */
     public void printString(String... strings) {
         printLine();
         for (String str : strings) {
@@ -41,7 +54,12 @@ public class Ui {
         printString(errorMessage);
     }
 
-    public String readCommand() throws PeppyUnknownCommandException {
+    /**
+     * Reads for the next user input.
+     *
+     * @return User input string.
+     */
+    public String readCommand() {
         return this.scanner.nextLine()
                 .replaceAll("\\|", "");
     }

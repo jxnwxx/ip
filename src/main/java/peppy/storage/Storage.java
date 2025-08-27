@@ -8,21 +8,33 @@ import java.util.Scanner;
 
 import peppy.exception.PeppyException;
 import peppy.exception.PeppyFileException;
-import peppy.exception.PeppyInvalidCommandException;
-import peppy.task.Deadline;
-import peppy.task.Event;
+import peppy.parser.Parser;
 import peppy.task.Task;
 import peppy.task.TaskList;
-import peppy.task.Todo;
 import peppy.ui.Ui;
 
+/**
+ * Provides persistent storage for Peppy application data.
+ * This class keeps a handle to the data file and contains operations to create the file if missing, read the file's
+ * content
+ */
 public class Storage {
     private final File file;
 
+    /**
+     * Constructs a Storage object with a file handle to the specified file path.
+     *
+     * @param filePath The file path to the data file.
+     */
     public Storage(String filePath) {
         this.file = new File(filePath);
     }
 
+    /**
+     * Creates the file and its parent directories.
+     *
+     * @throws PeppyFileException If the file could not be created.
+     */
     private void createFile() throws PeppyFileException {
         try {
             file.getParentFile().mkdirs();
@@ -32,15 +44,27 @@ public class Storage {
         }
     }
 
+    /**
+     * Wipes the file's content.
+     *
+     * @throws PeppyFileException If the file could not be wiped.
+     */
     private void wipeFile() throws PeppyFileException {
         try {
             FileWriter fw = new FileWriter(file, false);
             fw.close();
         } catch (IOException e) {
-            throw new PeppyFileException("Could not write to file... T^T");
+            throw new PeppyFileException("Could not wipe file... T^T");
         }
     }
 
+    /**
+     * Loads data from the file and populates TaskList.
+     *
+     * @param ui Ui object to print any errors.
+     * @return TaskList object containing tasks from the file.
+     * @throws PeppyException If data file is corrupted or not the correct format.
+     */
     public TaskList loadData(Ui ui) throws PeppyException {
         TaskList tasks = new TaskList();
         try {
@@ -51,7 +75,7 @@ public class Storage {
 
             while (scanner.hasNext()) {
                 String[] lineSplit = scanner.nextLine().split("\\|");
-                Task task = getTask(lineSplit);
+                Task task = Parser.parseToTask(lineSplit);
                 tasks.addTask(task, ui, false);
             }
             scanner.close();
@@ -66,24 +90,12 @@ public class Storage {
 
     }
 
-    private static Task getTask(String[] lineSplit) throws PeppyFileException, PeppyInvalidCommandException {
-        try {
-            Task task = switch (lineSplit[0].trim()) {
-            case "T" -> new Todo(lineSplit[2].trim());
-            case "D" -> new Deadline(lineSplit[2].trim(), lineSplit[3].trim());
-            case "E" -> new Event(lineSplit[2].trim(), lineSplit[3].trim(), lineSplit[4].trim());
-            default -> throw new PeppyFileException("Unknown task in data file...");
-            };
-
-            if (lineSplit[1].trim().equals("1")) {
-                task.markDone();
-            }
-            return task;
-        } catch (IndexOutOfBoundsException e) {
-            throw new PeppyFileException("The data file was corrupted...");
-        }
-    }
-
+    /**
+     * Writes all task in TaskList to the file.
+     *
+     * @param tasks TaskList object containing tasks to be written.
+     * @throws PeppyFileException If the file could not be written to.
+     */
     public void saveData(TaskList tasks) throws PeppyFileException {
         try {
             FileWriter fw = new FileWriter(file, false);

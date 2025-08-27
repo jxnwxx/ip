@@ -5,13 +5,26 @@ import java.util.ArrayList;
 import peppy.exception.PeppyEditException;
 import peppy.ui.Ui;
 
+/**
+ * Stores Task objects within an ArrayList and has operations to add, delete and retrieve.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
 
+    /**
+     * Constructs a TaskList to store Task objects.
+     */
     public TaskList() {
         this.tasks = new ArrayList<Task>();
     }
 
+    /**
+     * Adds the specified Task object into the list.
+     *
+     * @param task        Task object to be added to the list.
+     * @param ui          Ui object to print output.
+     * @param shouldPrint Should the Ui print that it added the task.
+     */
     public void addTask(Task task, Ui ui, boolean shouldPrint) {
         tasks.add(task);
         if (shouldPrint) {
@@ -23,6 +36,13 @@ public class TaskList {
         }
     }
 
+    /**
+     * Deletes the specified index Task object from the list
+     *
+     * @param index Index of Task object in the list to be deleted.
+     * @param ui    Ui object to print output.
+     * @throws PeppyEditException If index is out of bounds.
+     */
     public void deleteTask(int index, Ui ui) throws PeppyEditException {
         if (index <= tasks.size() && index > 0) {
             Task task = getTask(index - 1);
