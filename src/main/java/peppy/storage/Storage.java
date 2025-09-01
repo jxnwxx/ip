@@ -11,7 +11,6 @@ import peppy.exception.PeppyFileException;
 import peppy.parser.Parser;
 import peppy.task.Task;
 import peppy.task.TaskList;
-import peppy.ui.Ui;
 
 /**
  * Provides persistent storage for Peppy application data.
@@ -61,11 +60,10 @@ public class Storage {
     /**
      * Loads data from the file and populates TaskList.
      *
-     * @param ui Ui object to print any errors.
      * @return TaskList object containing tasks from the file.
      * @throws PeppyException If data file is corrupted or not the correct format.
      */
-    public TaskList loadData(Ui ui) throws PeppyException {
+    public TaskList loadData() throws PeppyException {
         TaskList tasks = new TaskList();
         try {
             if (!file.exists()) {
@@ -76,16 +74,13 @@ public class Storage {
             while (scanner.hasNext()) {
                 String[] lineSplit = scanner.nextLine().split("\\|");
                 Task task = Parser.parseToTask(lineSplit);
-                tasks.addTask(task, ui, false);
+                tasks.addTask(task, false);
             }
             scanner.close();
             return tasks;
-        } catch (FileNotFoundException e) {
-            ui.printString("ERROR!!! The data file was not found...");
-        } catch (PeppyException e) {
-            ui.printString(e.getMessage());
+        } catch (FileNotFoundException | PeppyException e) {
+            wipeFile();
         }
-        wipeFile();
         return new TaskList();
 
     }

@@ -3,7 +3,6 @@ package peppy.task;
 import java.util.ArrayList;
 
 import peppy.exception.PeppyEditException;
-import peppy.ui.Ui;
 
 /**
  * Stores Task objects within an ArrayList and has operations to add, delete and retrieve.
@@ -22,42 +21,49 @@ public class TaskList {
      * Adds the specified Task object into the list.
      *
      * @param task        Task object to be added to the list.
-     * @param ui          Ui object to print output.
      * @param shouldPrint Should the Ui print that it added the task.
+     * @return String to print.
      */
-    public void addTask(Task task, Ui ui, boolean shouldPrint) {
+    public String addTask(Task task, boolean shouldPrint) {
         tasks.add(task);
         if (shouldPrint) {
-            ui.printString("Got it. I've added this task:",
-                    String.format("  %s", task),
-                    String.format("Now you have %d task%s in the list.",
-                            tasks.size(),
-                            tasks.size() > 1 ? "s" : ""));
+            return "Got it. I've added this task:\n"
+                    + String.format("%s\n", task)
+                    + String.format("Now you have %d task%s in the list.\n",
+                    tasks.size(),
+                    tasks.size() > 1 ? "s" : "");
         }
+        return "";
     }
 
     /**
      * Deletes the specified index Task object from the list
      *
      * @param index Index of Task object in the list to be deleted.
-     * @param ui    Ui object to print output.
+     * @return String to print.
      * @throws PeppyEditException If index is out of bounds.
      */
-    public void deleteTask(int index, Ui ui) throws PeppyEditException {
+    public String deleteTask(int index) throws PeppyEditException {
         if (index <= tasks.size() && index > 0) {
             Task task = getTask(index - 1);
             tasks.remove(index - 1);
-            ui.printString("Noted. I've removed this task:",
-                    String.format("  %s", task),
-                    String.format("Now you have %d task%s in the list.",
-                            tasks.size(),
-                            tasks.size() > 1 ? "s" : ""));
+            return "Got it. I've deleted this task:\n"
+                    + String.format("%s\n", task)
+                    + String.format("Now you have %d task%s in the list.\n",
+                    tasks.size(),
+                    tasks.size() > 1 ? "s" : "");
         } else {
             throw new PeppyEditException("Error: Index out of range!");
         }
     }
 
-    public void findTask(String input, Ui ui) {
+    /**
+     * Finds tasks that contains the keywords within the TaskList.
+     *
+     * @param input Keyword to search for.
+     * @return String to print.
+     */
+    public String findTask(String input) {
         StringBuilder result = new StringBuilder();
         int found = 0;
 
@@ -71,10 +77,10 @@ public class TaskList {
             }
         }
         if (found > 0) {
-            ui.printString("Here are the matching tasks in your list:\n\t "
-                    + result.toString().stripTrailing());
+            return "Here are the matching tasks in your list:\n\t "
+                    + result.toString().stripTrailing();
         } else {
-            ui.printString("No tasks found with the given keyword.");
+            return "No tasks found with the given keyword.";
         }
     }
 
@@ -93,11 +99,11 @@ public class TaskList {
         } else {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < tasks.size(); i++) {
-                result.append(String.format("%d. %s \n\t ",
+                result.append(String.format("%d. %s \n",
                         i + 1,
                         tasks.get(i).toString()));
             }
-            return "Here are the tasks in your list:\n\t "
+            return "Here are the tasks in your list:\n"
                     + result.toString().stripTrailing();
         }
     }
