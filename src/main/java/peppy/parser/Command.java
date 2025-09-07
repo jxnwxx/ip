@@ -17,6 +17,7 @@ import peppy.task.Todo;
  * Represents the commands that Peppy can execute.
  */
 public class Command {
+    private static final String SHOW_HELP = "__SHOW_HELP__";
     private final Action action;
     private final String[] args;
 
@@ -130,6 +131,9 @@ public class Command {
                 break;
             case FIND:
                 result = handleFind(tasks, argsList);
+                break;
+            case HELP:
+                result = SHOW_HELP;
                 break;
             default:
                 throw new PeppyUnknownCommandException("I do not know this command... T^T");
