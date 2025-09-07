@@ -26,14 +26,16 @@ public class TaskList {
      */
     public String addTask(Task task, boolean shouldPrint) {
         tasks.add(task);
-        if (shouldPrint) {
-            return "Got it. I've added this task:\n"
-                    + String.format("%s\n", task)
-                    + String.format("Now you have %d task%s in the list.\n",
-                    tasks.size(),
-                    tasks.size() > 1 ? "s" : "");
+
+        if (!shouldPrint) {
+            return "";
         }
-        return "";
+
+        return "Got it. I've added this task:\n"
+                + String.format("%s\n", task)
+                + String.format("Now you have %d task%s in the list.\n",
+                tasks.size(),
+                tasks.size() > 1 ? "s" : "");
     }
 
     /**
@@ -44,17 +46,17 @@ public class TaskList {
      * @throws PeppyEditException If index is out of bounds.
      */
     public String deleteTask(int index) throws PeppyEditException {
-        if (index <= tasks.size() && index > 0) {
-            Task task = getTask(index - 1);
-            tasks.remove(index - 1);
-            return "Got it. I've deleted this task:\n"
-                    + String.format("%s\n", task)
-                    + String.format("Now you have %d task%s in the list.\n",
-                    tasks.size(),
-                    tasks.size() > 1 ? "s" : "");
-        } else {
+        if (index > tasks.size() || index <= 0) {
             throw new PeppyEditException("Error: Index out of range!");
         }
+
+        Task task = getTask(index - 1);
+        tasks.remove(index - 1);
+        return "Got it. I've deleted this task:\n"
+                + String.format("%s\n", task)
+                + String.format("Now you have %d task%s in the list.\n",
+                tasks.size(),
+                tasks.size() > 1 ? "s" : "");
     }
 
     /**
@@ -76,6 +78,7 @@ public class TaskList {
                         tasks.get(i).toString()));
             }
         }
+
         if (found > 0) {
             return "Here are the matching tasks in your list:\n\t "
                     + result.toString().stripTrailing();
@@ -96,15 +99,17 @@ public class TaskList {
     public String toString() {
         if (tasks.isEmpty()) {
             return "There's nothing in the list! Try adding some tasks!";
-        } else {
-            StringBuilder result = new StringBuilder();
-            for (int i = 0; i < tasks.size(); i++) {
-                result.append(String.format("%d. %s \n",
-                        i + 1,
-                        tasks.get(i).toString()));
-            }
-            return "Here are the tasks in your list:\n"
-                    + result.toString().stripTrailing();
         }
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < tasks.size(); i++) {
+            result.append(String.format("%d. %s \n",
+                    i + 1,
+                    tasks.get(i).toString()));
+        }
+
+        return "Here are the tasks in your list:\n"
+                + result.toString().stripTrailing();
     }
 }

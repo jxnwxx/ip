@@ -26,15 +26,16 @@ public class Event extends Task {
         super(description);
 
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(INPUT_DATE_FORMAT);
             this.from = LocalDateTime.from(formatter.parse(from));
             this.to = LocalDateTime.from(formatter.parse(to));
+
             if (this.from.isAfter(this.to)) {
                 throw new PeppyInvalidCommandException("start_date is after end_date");
             }
         } catch (DateTimeException e) {
-            throw new PeppyInvalidCommandException("Invalid date time format "
-                    + "(dd-MM-yyyy HHmm)");
+            throw new PeppyInvalidCommandException("Invalid date time format, use: "
+                    + INPUT_DATE_FORMAT);
         }
     }
 
@@ -42,15 +43,15 @@ public class Event extends Task {
     public String toString() {
         return String.format("[E]%s (from: %s to: %s)",
                 super.toString(),
-                this.from.format(DateTimeFormatter.ofPattern("dd/MMM/yyyy hh:mma")),
-                this.to.format(DateTimeFormatter.ofPattern("dd/MMM/yyyy hh:mma")));
+                this.from.format(DateTimeFormatter.ofPattern(OUTPUT_DATE_FORMAT)),
+                this.to.format(DateTimeFormatter.ofPattern(OUTPUT_DATE_FORMAT)));
     }
 
     @Override
     public String toDataString() {
         return String.format("E|%s|%s|%s",
                 super.toDataString(),
-                this.from.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm")),
-                this.to.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm")));
+                this.from.format(DateTimeFormatter.ofPattern(INPUT_DATE_FORMAT)),
+                this.to.format(DateTimeFormatter.ofPattern(INPUT_DATE_FORMAT)));
     }
 }
