@@ -30,6 +30,7 @@ public class Peppy {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
+        assert input != null;
         try {
             Command cmd = Parser.parseInput(input);
             return cmd.execute(tasks, storage);
