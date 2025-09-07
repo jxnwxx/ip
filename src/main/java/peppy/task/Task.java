@@ -6,8 +6,11 @@ import peppy.exception.PeppyInvalidCommandException;
  * Represents a Task to store.
  */
 public class Task {
+    public static final String INPUT_DATE_FORMAT = "dd-MM-yyyy HHmm";
+    public static final String OUTPUT_DATE_FORMAT = "dd/MMM/yyyy hh:mma";
     private final String description;
     private boolean isDone;
+
 
     /**
      * Constructs a Task object

@@ -34,13 +34,16 @@ public class Command {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || obj.getClass() != this.getClass()) {
+        if (obj == null) {
             return false;
-        } else {
-            Command other = (Command) obj;
-            return this.action == other.action
-                    && Arrays.equals(this.args, other.args);
         }
+        if (!(obj instanceof Command)) {
+            return false;
+        }
+
+        Command other = (Command) obj;
+        return this.action == other.action
+                && Arrays.equals(this.args, other.args);
     }
 
     private Action getAction() {
@@ -60,29 +63,34 @@ public class Command {
      * @throws PeppyEditException If task to be mark or unmark is already marked or unmarked respectively.
      */
     public String markTask(TaskList tasks, Integer index, Action action) throws PeppyEditException {
-        String result;
-
-        if (index <= tasks.getSize() && index > 0) {
-            Task task = tasks.getTask(index - 1);
-            if (action == Action.MARK) {
-                if (task.markDone()) {
-                    result = "Nice! I've marked this task as done:\n"
-                            + String.format("   %s", task);
-                } else {
-                    throw new PeppyEditException("Task already marked as done!");
-                }
-            } else {
-                if (task.markUndone()) {
-                    result = "Nice! I've marked this task as not done yet:\n"
-                            + String.format("  %s", task);
-                } else {
-                    throw new PeppyEditException("Task already marked as undone!");
-                }
-            }
-        } else {
+        if (index > tasks.getSize() || index <= 0) {
             throw new PeppyEditException("Index out of range!");
         }
-        return result;
+
+        Task task = tasks.getTask(index - 1);
+        if (action == Action.MARK) {
+            return markDone(task);
+        } else {
+            return markUndone(task);
+        }
+    }
+
+    private static String markUndone(Task task) throws PeppyEditException {
+        if (!task.markUndone()) {
+            throw new PeppyEditException("Task already marked as undone!");
+        }
+
+        return "Nice! I've marked this task as not done yet:\n"
+                + String.format("  %s", task);
+    }
+
+    private static String markDone(Task task) throws PeppyEditException {
+        if (!task.markDone()) {
+            throw new PeppyEditException("Task already marked as done!");
+        }
+
+        return "Nice! I've marked this task as done:\n"
+                + String.format("   %s", task);
     }
 
     /**
@@ -106,76 +114,22 @@ public class Command {
                 break;
             case MARK:
             case UNMARK:
-                if (argsList.length == 1) {
-                    Integer index = Parser.parseToInt(argsList[0]);
-                    result = markTask(tasks, index, getAction());
-                } else {
-                    throw new PeppyInvalidCommandException("mark arguments incorrect!\n"
-                            + "\t Usage: mark <index>");
-                }
+                result = handleMark(tasks, argsList);
                 break;
             case TODO:
-                if (argsList.length == 1) {
-                    Todo todo = new Todo(argsList[0]);
-                    result = tasks.addTask(todo, true);
-                } else {
-                    throw new PeppyInvalidCommandException("todo arguments incorrect!\n"
-                            + "\t Usage: todo <description>");
-                }
+                result = handleTodo(tasks, argsList);
                 break;
             case DEADLINE:
-                if (argsList.length == 2 && argsList[1].startsWith("by ")) {
-                    String description = argsList[0].trim();
-                    String by = argsList[1].replace("by ", "").trim();
-
-                    if (!description.isEmpty() && !by.isEmpty()) {
-                        Deadline deadline = new Deadline(description, by);
-                        result = tasks.addTask(deadline, true);
-                    } else {
-                        throw new PeppyInvalidCommandException("deadline arguments incorrect!\n"
-                                + "\t Usage: deadline <description> /by <due>");
-                    }
-                } else {
-                    throw new PeppyInvalidCommandException("deadline arguments incorrect!\n"
-                            + "\t Usage: deadline <description> /by <due>");
-                }
+                result = handleDeadline(tasks, argsList);
                 break;
             case EVENT:
-                if (argsList.length == 3
-                        && argsList[1].startsWith("from ")
-                        && argsList[2].startsWith("to ")) {
-                    String description = argsList[0].trim();
-                    String from = argsList[1].replace("from ", "").trim();
-                    String to = argsList[2].replace("to ", "").trim();
-
-                    if (!description.isEmpty() && !from.isEmpty() && !to.isEmpty()) {
-                        Event event = new Event(description, from, to);
-                        result = tasks.addTask(event, true);
-                    } else {
-                        throw new PeppyInvalidCommandException("event arguments incorrect!\n"
-                                + "\t Usage: event <description> /from <start_date> /to <end_date>");
-                    }
-                } else {
-                    throw new PeppyInvalidCommandException("event arguments incorrect!\n"
-                            + "\t Usage: event <description> /from <start_date> /to <end_date>");
-                }
+                result = handleEvent(tasks, argsList);
                 break;
             case DELETE:
-                if (argsList.length == 1) {
-                    Integer index = Parser.parseToInt(argsList[0]);
-                    result = tasks.deleteTask(index);
-                } else {
-                    throw new PeppyInvalidCommandException("delete arguments incorrect!\n"
-                            + "\t Usage: delete <index>");
-                }
+                result = handleDelete(tasks, argsList);
                 break;
             case FIND:
-                if (argsList.length == 1) {
-                    result = tasks.findTask(argsList[0]);
-                } else {
-                    throw new PeppyInvalidCommandException("find arguments incorrect!\n"
-                            + "\t Usage: find <keyword>");
-                }
+                result = handleFind(tasks, argsList);
                 break;
             default:
                 throw new PeppyUnknownCommandException("I do not know this command... T^T");
@@ -185,5 +139,89 @@ public class Command {
             return e.getMessage();
         }
         return result;
+    }
+
+    private static String handleFind(TaskList tasks, String[] argsList) throws PeppyInvalidCommandException {
+        if (argsList.length != 1) {
+            throw new PeppyInvalidCommandException("find arguments incorrect!\n"
+                    + "\t Usage: find <keyword>");
+        }
+
+        return tasks.findTask(argsList[0]);
+    }
+
+    private static String handleDelete(TaskList tasks, String[] argsList)
+            throws PeppyInvalidCommandException, PeppyEditException {
+        if (argsList.length != 1) {
+            throw new PeppyInvalidCommandException("delete arguments incorrect!\n"
+                    + "\t Usage: delete <index>");
+        }
+
+        Integer index = Parser.parseToInt(argsList[0]);
+        return tasks.deleteTask(index);
+    }
+
+    private static String handleEvent(TaskList tasks, String[] argsList) throws PeppyInvalidCommandException {
+        if (argsList.length != 3
+                || !argsList[1].startsWith("from ")
+                || !argsList[2].startsWith("to ")) {
+            throw new PeppyInvalidCommandException("event arguments incorrect!\n"
+                    + "\t Usage: event <description> /from <start_date> /to <end_date>");
+        }
+
+        String description = argsList[0].trim();
+        String from = argsList[1].replace("from ", "").trim();
+        String to = argsList[2].replace("to ", "").trim();
+
+        if (description.isEmpty() && from.isBlank() && to.isBlank()) {
+            throw new PeppyInvalidCommandException("event arguments incorrect!\n"
+                    + "\t Usage: event <description> /from <start_date> /to <end_date>");
+        }
+
+        Event event = new Event(description, from, to);
+        return tasks.addTask(event, true);
+    }
+
+    private static String handleDeadline(TaskList tasks, String[] argsList) throws PeppyInvalidCommandException {
+        if (argsList.length != 2 || !argsList[1].startsWith("by ")) {
+            throw new PeppyInvalidCommandException("deadline arguments incorrect!\n"
+                    + "\t Usage: deadline <description> /by <due>");
+
+        }
+
+        String description = argsList[0].trim();
+        String by = argsList[1].replace("by ", "").trim();
+
+        if (description.isEmpty() && by.isEmpty()) {
+            throw new PeppyInvalidCommandException("deadline arguments incorrect!\n"
+                    + "\t Usage: deadline <description> /by <due>");
+
+        }
+
+        Deadline deadline = new Deadline(description, by);
+        return tasks.addTask(deadline, true);
+    }
+
+    private static String handleTodo(TaskList tasks, String[] argsList) throws PeppyInvalidCommandException {
+        if (argsList.length != 1) {
+            throw new PeppyInvalidCommandException("todo arguments incorrect!\n"
+                    + "\t Usage: todo <description>");
+        }
+
+        Todo todo = new Todo(argsList[0]);
+        return tasks.addTask(todo, true);
+    }
+
+    private String handleMark(TaskList tasks, String[] argsList)
+            throws PeppyInvalidCommandException, PeppyEditException {
+        if (argsList.length != 1) {
+            throw new PeppyInvalidCommandException("mark arguments incorrect!\n"
+                    + "\t Usage: mark <index>");
+
+        }
+
+        Integer index = Parser.parseToInt(argsList[0]);
+        return markTask(tasks, index, getAction());
+
     }
 }

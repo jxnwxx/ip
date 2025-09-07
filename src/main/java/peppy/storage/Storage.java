@@ -69,8 +69,8 @@ public class Storage {
             if (!file.exists()) {
                 createFile();
             }
-            Scanner scanner = new Scanner(file);
 
+            Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String[] lineSplit = scanner.nextLine().split("\\|");
                 Task task = Parser.parseToTask(lineSplit);
