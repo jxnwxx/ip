@@ -58,6 +58,7 @@ public class Parser {
      * @throws PeppyInvalidCommandException If lineSplit is shorter than the Task it is trying to construct.
      */
     public static Task parseToTask(String[] lineSplit) throws PeppyFileException, PeppyInvalidCommandException {
+        assert lineSplit != null;
         try {
             Task task = switch (lineSplit[0].trim()) {
             case "T" -> new Todo(lineSplit[2].trim());
