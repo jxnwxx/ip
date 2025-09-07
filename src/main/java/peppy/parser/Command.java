@@ -60,7 +60,7 @@ public class Command {
      * @throws PeppyEditException If task to be mark or unmark is already marked or unmarked respectively.
      */
     public String markTask(TaskList tasks, Integer index, Action action) throws PeppyEditException {
-        String result = "";
+        String result;
 
         if (index <= tasks.getSize() && index > 0) {
             Task task = tasks.getTask(index - 1);
@@ -93,7 +93,7 @@ public class Command {
      * @return String to print on GUI.
      */
     public String execute(TaskList tasks, Storage storage) {
-        String result = "";
+        String result;
         try {
             String[] argsList = getArgs();
 
