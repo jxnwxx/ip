@@ -26,8 +26,8 @@ public class MainWindow extends AnchorPane {
 
     private Peppy peppy;
 
-    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private final Image peppyImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
+    private final Image peppyImage = new Image(this.getClass().getResourceAsStream("/images/Peppy.png"));
 
     @FXML
     public void initialize() {
@@ -78,8 +78,8 @@ public class MainWindow extends AnchorPane {
                 Here are the commands you can use:
     
                 1. todo <description>
-                2. deadline <description> /by <due (dd-MM-yyyy HHmm)>
-                3. event <description> /from <start (dd-MM-yyyy HHmm)> /to <end (dd-MM-yyyy HHmm)>
+                2. deadline <description> /by <due> (date format: dd-MM-yyyy HHmm)
+                3. event <description> /from <start> /to <end> (date format: dd-MM-yyyy HHmm)
                 4. mark <index>
                 5. unmark <index>
                 6. delete <index>
