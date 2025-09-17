@@ -72,11 +72,11 @@ public class MainWindow extends AnchorPane {
     private void showHelpDialog() {
         Alert helpAlert = new Alert(Alert.AlertType.INFORMATION);
         helpAlert.setTitle("Peppy Help");
+
         helpAlert.setHeaderText("Command Usage Guide");
         helpAlert.setContentText(
                 """
                 Here are the commands you can use:
-    
                 1. todo <description>
                 2. deadline <description> /by <due> (date format: dd-MM-yyyy HHmm)
                 3. event <description> /from <start> /to <end> (date format: dd-MM-yyyy HHmm)
