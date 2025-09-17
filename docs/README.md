@@ -50,11 +50,11 @@ Adds a deadline task to the task list.
 
 Format: `deadline <description> /by <due_date>`
 > [!NOTE]
-> All dates are in DD-MM-YYYY HHmm. e.g. 25-12-2025 2359
+> All dates are in dd-MM-yyyy HHmm. e.g. 25-12-2025 2359
 
 Examples:
 - `deadline CS2103T iP /by 19-09-2025 2359`
-- `deadline return book /by `
+- `deadline return book /by 21-09-2025 1200`
 
 ### Adding event: `event`
 Adds an event task to the task list.
