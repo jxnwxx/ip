@@ -100,6 +100,7 @@ Format: `find <keyword>`
 Example:
 - `find read book` returns `read book`
 - `find book` returns `read book` and `return book`
+
 ![Find Screenshot](Find.png)
 
 ### Listing all tasks: `list`
